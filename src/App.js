@@ -1,93 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
-//import './all.css';
-class ShortInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content : '',
-      prompt : props.prompt,
-      type : props.type,
-      placeholder : props.placeholder,
-    };
-  }
-  handleContentChange = event => {
-    this.setState({ content: event.target.value})
-  };
-  render () {
-    return (
-      <div>
-        <h3>{this.state.prompt}</h3>
-        <input
-          id = {this.state.prompt}
-          type={this.state.type}
-          placeholder={this.state.placeholder}
-          value={this.state.content}
-          onChange={this.handleContentChange}
-          required
-        />
-      </div>
-      );
-  }
-}
-
-class LongInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content : '',
-      prompt : props.prompt,
-    };
-  }
-  handleContentChange = event => {
-    this.setState({ content: event.target.value})
-  };
-  render () {
-    return (
-      <div>
-        <h3>{this.state.prompt}</h3>
-        <textarea
-          value={this.state.content}
-          onChange={this.handleContentChange}
-        />
-      </div>
-      );
-  }
-}
-
-class RadioInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content : '',
-      option : props.option,
-      name : props.name,
-    };
-  }
-  handleContentChange = event => {
-    this.setState({ content: event.target.value})
-  };
-  render () {
-    return (
-      <div>
-        <input
-          type="radio"
-          name={this.state.name}
-          value={this.state.option}
-          onChange={this.handleContentChange}
-        />{this.state.option}
-      </div>
-      );
-  }
-}
+import ShortInput from './ShortInput.js';
+import LongInput from './LongInput.js';
+import RadioInput from './RadioInput.js';
 
 class App extends Component {
-  // constructor(props) {
-  //   this.state = {
-      
-  //   }
-  // }
-
   renderShortInput(prompt, type, placeholder) {
     return <ShortInput
               prompt = {prompt}
@@ -132,7 +49,7 @@ class App extends Component {
           {this.renderShortInput("Year","text","2021")}
           {this.renderRadioInput("Have you received your gift?", "Yes", "No", "No but will soon")}
           {this.renderLongInput("Any thoughts or suggestions?")}
-        <input type="button" value="Submit" onClick={this.handleSubmit} />
+          <input type="button" value="Submit" onClick={this.handleSubmit} />
 
         </div>
       </div>
