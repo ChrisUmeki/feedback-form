@@ -19,6 +19,7 @@ class ShortInput extends Component {
       <div>
         <h3>{this.state.prompt}</h3>
         <input
+          id = {this.state.prompt}
           type={this.state.type}
           placeholder={this.state.placeholder}
           value={this.state.content}
@@ -81,6 +82,12 @@ class RadioInput extends Component {
 }
 
 class App extends Component {
+  // constructor(props) {
+  //   this.state = {
+      
+  //   }
+  // }
+
   renderShortInput(prompt, type, placeholder) {
     return <ShortInput
               prompt = {prompt}
@@ -106,6 +113,10 @@ class App extends Component {
     );
   }
 
+  handleSubmit(event) {
+    alert("ji" + (document.getElementById("Name").value));
+  }
+
   render() {
     return (
       <div>
@@ -121,6 +132,7 @@ class App extends Component {
           {this.renderShortInput("Year","text","2021")}
           {this.renderRadioInput("Have you received your gift?", "Yes", "No", "No but will soon")}
           {this.renderLongInput("Any thoughts or suggestions?")}
+        <input type="button" value="Submit" onClick={this.handleSubmit} />
 
         </div>
       </div>
