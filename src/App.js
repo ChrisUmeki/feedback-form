@@ -1,25 +1,53 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
 //import './all.css';
-class ShortAnswer extends Component {
+class ShortInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name : '',
+      content : '',
       prompt : props.prompt,
+      type : props.type,
+      placeholder : props.placeholder,
     };
   }
-  handleNameChange = event => {
-    this.setState({ name: event.target.value})
+  handleContentChange = event => {
+    this.setState({ content: event.target.value})
   };
   render () {
     return (
       <div>
         <h3>{this.state.prompt}</h3>
         <input
-          type="text"
-          value={this.state.name}
-          onChange={this.handleNameChange}
+          type={this.state.type}
+          placeholder={this.state.placeholder}
+          value={this.state.content}
+          onChange={this.handleContentChange}
+          required
+        />
+      </div>
+      );
+  }
+}
+
+class LongInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content : '',
+      prompt : props.prompt,
+    };
+  }
+  handleContentChange = event => {
+    this.setState({ content: event.target.value})
+  };
+  render () {
+    return (
+      <div>
+        <h3>{this.state.prompt}</h3>
+        <textarea
+          value={this.state.content}
+          onChange={this.handleContentChange}
         />
       </div>
       );
@@ -27,11 +55,15 @@ class ShortAnswer extends Component {
 }
 
 class App extends Component {
-  renderShort(str) {
-    return <ShortAnswer prompt = {str}/>;
+  renderShortInput(prompt, type, placeholder) {
+    return <ShortInput
+              prompt = {prompt}
+              type = {type}
+              placeholder = {placeholder}
+            />;
   }
-  renderLong(str) {
-    return;
+  renderLongInput(prompt) {
+    return <LongInput prompt = {prompt}/>;
   }
 
   render() {
@@ -44,9 +76,10 @@ class App extends Component {
           <h1>Big Red Gifts<br/>Feedback Form</h1>
         </div>
         <div className="sign_up">
-          {this.renderShort("Name")}
-          {this.renderShort("NetID")}
-          {this.renderShort("Year")}
+          {this.renderShortInput("Name","text","Touchdown the Bear")}
+          {this.renderShortInput("Email","email","NetId@Cornell.edu")}
+          {this.renderShortInput("Year","text","2021")}
+          {this.renderLongInput("Any thoughts or suggestions?")}
 
         </div>
       </div>
