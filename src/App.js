@@ -54,6 +54,32 @@ class LongInput extends Component {
   }
 }
 
+class RadioInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content : '',
+      option : props.option,
+      name : props.name,
+    };
+  }
+  handleContentChange = event => {
+    this.setState({ content: event.target.value})
+  };
+  render () {
+    return (
+      <div>
+        <input
+          type="radio"
+          name={this.state.name}
+          value={this.state.option}
+          onChange={this.handleContentChange}
+        />{this.state.option}
+      </div>
+      );
+  }
+}
+
 class App extends Component {
   renderShortInput(prompt, type, placeholder) {
     return <ShortInput
@@ -64,6 +90,20 @@ class App extends Component {
   }
   renderLongInput(prompt) {
     return <LongInput prompt = {prompt}/>;
+  }
+  renderRadioInput(prompt, ...options) {
+    const list = options.map(option => 
+      <RadioInput
+          option = {option}
+          name = {prompt}
+          />
+    );
+    return (
+      <div>
+        <h3>{prompt}</h3>
+        {list}
+      </div>
+    );
   }
 
   render() {
@@ -79,6 +119,7 @@ class App extends Component {
           {this.renderShortInput("Name","text","Touchdown the Bear")}
           {this.renderShortInput("Email","email","NetId@Cornell.edu")}
           {this.renderShortInput("Year","text","2021")}
+          {this.renderRadioInput("Have you received your gift?", "Yes", "No", "No but will soon")}
           {this.renderLongInput("Any thoughts or suggestions?")}
 
         </div>
