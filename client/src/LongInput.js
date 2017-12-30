@@ -16,6 +16,7 @@ class LongInput extends Component {
       <div>
         <h3>{this.state.prompt}</h3>
         <textarea
+          id={this.state.prompt}
           value={this.state.content}
           onChange={this.handleContentChange}
         />

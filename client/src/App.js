@@ -35,7 +35,9 @@ class App extends Component {
     const formData = {
       "name": document.getElementById("Name").value,
       "email": document.getElementById("Email").value,
-      "year": document.getElementById("Year").value
+      "year": document.getElementById("Year").value,
+      "received": document.querySelector('input[name="Have you received your gift?"]:checked').value,
+      "comments": document.getElementById("Any thoughts or suggestions?").value
     };
     $.ajax({
       url: 'index.html',

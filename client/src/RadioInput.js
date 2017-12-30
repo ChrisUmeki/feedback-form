@@ -16,6 +16,7 @@ class RadioInput extends Component {
     return (
       <div>
         <input
+          id={this.state.name + this.state.option}
           type="radio"
           name={this.state.name}
           value={this.state.option}

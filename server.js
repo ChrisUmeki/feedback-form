@@ -10,16 +10,15 @@ app.get('*', (req,res) => {
 });
 
 app.post('*', jsonParser, (req,res) => {
-  console.log(req);
   fs.readFile('response.json', function(err, data) {
     if (err) {
       console.error(err);
       process.exit(1);
     }
     let responses = JSON.parse(data);
+    responses.push(req.body);
 
-    responses.push({id: Date.now(), name: req.body.name});
-    fs.writeFile('response.json', JSON.stringify(responses), function(err) {
+    fs.writeFile('response.json', JSON.stringify(responses, null, 2), function(err) {
       if (err) {
         console.error(err);
         process.exit(1);
