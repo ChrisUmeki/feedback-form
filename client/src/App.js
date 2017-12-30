@@ -3,6 +3,7 @@ import logo from './logo.png';
 import ShortInput from './ShortInput.js';
 import LongInput from './LongInput.js';
 import RadioInput from './RadioInput.js';
+import $ from 'jquery';
 
 class App extends Component {
   renderShortInput(prompt, type, placeholder) {
@@ -31,16 +32,33 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-    alert("ji" + (document.getElementById("Name").value));
-
-    alert("Thanks for the feedback!")
+    const formData = {
+      "name": document.getElementById("Name").value,
+      "email": document.getElementById("Email").value,
+      "year": document.getElementById("Year").value
+    };
+    $.ajax({
+      url: 'index.html',
+      contentType: 'application/json',
+      type: 'POST',
+      data: JSON.stringify(formData),
+      success: function (data) {
+        console.log('Submitted' + formData.email);
+        this.setState({data: data});
+      }.bind(this),
+      error: function (data) {
+        console.log('Submission Error: ' + formData.email);
+      }
+    });
+    alert("Thank you for the feedback, " + formData.name + "!");
+    
   }
 
   render() {
     return (
       <div>
 
-      <div className="App">
+      <form className="App" onSubmit={this.handleSubmit}>
         <div className="logo">
           <img id = "logo" src={logo} className="App-logo" alt="logo" />
           <h1>Big Red Gifts<br/>Feedback Form</h1>
@@ -51,10 +69,10 @@ class App extends Component {
           {this.renderShortInput("Year","text","2021")}
           {this.renderRadioInput("Have you received your gift?", "Yes", "No", "No but will soon")}
           {this.renderLongInput("Any thoughts or suggestions?")}
-          <input type="button" value="Submit" onClick={this.handleSubmit} />
+          <br/><button>Submit</button><br/><br/><br/>
 
         </div>
-      </div>
+      </form>
       </div>
     );
   }

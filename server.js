@@ -1,11 +1,33 @@
 const express = require('express');
-const path = require('path');
 const app = express();
-
-app.use(express.static(path.join(__dirname, 'client/build')));
+const fs = require('fs');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
+app.use(express.static('./client/build'));
 
 app.get('*', (req,res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(__dirname + '/client/build/index.html');
 });
+
+app.post('*', jsonParser, (req,res) => {
+  console.log(req);
+  fs.readFile('response.json', function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    let responses = JSON.parse(data);
+
+    responses.push({id: Date.now(), name: req.body.name});
+    fs.writeFile('response.json', JSON.stringify(responses), function(err) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(responses);
+    })
+  })
+}
+);
 
 app.listen(5000, () => console.log('Listening on port 5000'));
